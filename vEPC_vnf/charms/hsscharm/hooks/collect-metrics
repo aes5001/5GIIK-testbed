@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+"""Handle the collect-metrics hook via proxy.
+
+The normal metrics layer will only execute metrics collection against the local
+machine. This hook implements the same approach, but runs the collection code
+against the configured ssh proxy.
+
+Because the metrics hook runs in a restricted context, it can't be run as a
+normal reactive event, nor can it access things like config.
+"""
+
+import os
+import shlex
+from subprocess import check_call, CalledProcessError
+import sys
+import yaml
+
+# Load modules from $CHARM_DIR/lib
+sys.path.append('lib')
+import charms.sshproxy
+
+
+def build_command(doc):
+    """Build the commands to report metrics.
+
+    Build a list of `add-metric` commands to report the current metrics
+    back to the Juju controller.
+    """
+    values = {}
+    metrics = doc.get("metrics", {})
+    for metric, mdoc in metrics.items():
+        cmd = mdoc.get("command")
+        if cmd:
+            try:
+                value, err = charms.sshproxy._run(
+                    # The command may contain quotes that need to be preserved,
+                    # i.e., `awk '{print $1}' /proc/uptime`
+                    shlex.split(cmd, posix=False)
+                )
+            except Exception as e:
+                # Ignore all errors
+                with open("metrics.log", "a") as f:
+                    f.write("{}".format(e))
+                continue
+
+            if isinstance(value, bytes):
+                value = value.decode('utf-8')
+
+            value = value.strip()
+            if value:
+                values[metric] = value
+
+    if not values:
+        return None
+    command = ["add-metric"]
+    for metric, value in values.items():
+        command.append("%s=%s" % (metric, value))
+    return command
+
+
+if __name__ == '__main__':
+    charm_dir = os.path.dirname(os.path.abspath(os.path.join(__file__, "..")))
+    metrics_yaml = os.path.join(charm_dir, "metrics.yaml")
+    with open(metrics_yaml) as f:
+        doc = yaml.load(f)
+        command = build_command(doc)
+        if command:
+            check_call(command)

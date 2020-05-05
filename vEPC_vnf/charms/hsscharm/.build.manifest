@@ -1,0 +1,356 @@
+{
+  "layers": [
+    {
+      "rev": "fcdcea4e5de3e1556c24e6704607862d0ba00a56",
+      "url": "layer:options"
+    },
+    {
+      "rev": "46413ae6494d4805bdea61d97ce16ff8b9fd7717",
+      "url": "layer:basic"
+    },
+    {
+      "rev": "009e8631e4d173a71ac53032bbad465a89c6c365",
+      "url": "layer:sshproxy"
+    },
+    {
+      "rev": "e6a495fab012f06484ed419fd5c2453e6a92eef1",
+      "url": "layer:vnfproxy"
+    },
+    {
+      "rev": null,
+      "url": "hsscharm"
+    }
+  ],
+  "signatures": {
+    ".build.manifest": [
+      "build",
+      "dynamic",
+      "unchecked"
+    ],
+    ".gitignore": [
+      "layer:sshproxy",
+      "static",
+      "17526a7f7312e7eefb932d1c514b7bc8425fab5bd1ade149e106ecf8bff67358"
+    ],
+    "LICENSE": [
+      "layer:basic",
+      "static",
+      "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    ],
+    "Makefile": [
+      "layer:basic",
+      "static",
+      "b7ab3a34e5faf79b96a8632039a0ad0aa87f2a9b5f0ba604e007cafb22190301"
+    ],
+    "README.ex": [
+      "hsscharm",
+      "static",
+      "eb25333fb6ee2abc2d5dde329dfd6b4b2a6dd5516094e75354fb6cd84010afad"
+    ],
+    "README.md": [
+      "layer:vnfproxy",
+      "static",
+      "fed2909a56f740deec009fed50deffe9b017531a5ef6bcde6d2ec519e19d4014"
+    ],
+    "actions.yaml": [
+      "hsscharm",
+      "dynamic",
+      "48dcbdb63bec72968240f1aad0e27d495c1ff26ad323dbe5fc275822073c4561"
+    ],
+    "actions/configure-hss": [
+      "hsscharm",
+      "static",
+      "bca164b7750ea13c9da05d8b5114fa071bbf7e2e2d2bbe947cc941af3d28606a"
+    ],
+    "actions/generate-ssh-key": [
+      "layer:sshproxy",
+      "static",
+      "46bf4be02078a0f5ac60ab81609372a8f9943885b7a4999ce5332ea2f4857036"
+    ],
+    "actions/get-ssh-public-key": [
+      "layer:sshproxy",
+      "static",
+      "46bf4be02078a0f5ac60ab81609372a8f9943885b7a4999ce5332ea2f4857036"
+    ],
+    "actions/reboot": [
+      "layer:vnfproxy",
+      "static",
+      "afc0df4409fb6eb7b7e6595490913c1efe329b393d4860ae226d8aaccc01fcf2"
+    ],
+    "actions/restart": [
+      "layer:vnfproxy",
+      "static",
+      "afc0df4409fb6eb7b7e6595490913c1efe329b393d4860ae226d8aaccc01fcf2"
+    ],
+    "actions/restart-hss": [
+      "hsscharm",
+      "static",
+      "bca164b7750ea13c9da05d8b5114fa071bbf7e2e2d2bbe947cc941af3d28606a"
+    ],
+    "actions/run": [
+      "layer:sshproxy",
+      "static",
+      "46bf4be02078a0f5ac60ab81609372a8f9943885b7a4999ce5332ea2f4857036"
+    ],
+    "actions/start": [
+      "layer:vnfproxy",
+      "static",
+      "afc0df4409fb6eb7b7e6595490913c1efe329b393d4860ae226d8aaccc01fcf2"
+    ],
+    "actions/stop": [
+      "layer:vnfproxy",
+      "static",
+      "afc0df4409fb6eb7b7e6595490913c1efe329b393d4860ae226d8aaccc01fcf2"
+    ],
+    "actions/upgrade": [
+      "layer:vnfproxy",
+      "static",
+      "afc0df4409fb6eb7b7e6595490913c1efe329b393d4860ae226d8aaccc01fcf2"
+    ],
+    "actions/verify-ssh-credentials": [
+      "layer:sshproxy",
+      "static",
+      "46bf4be02078a0f5ac60ab81609372a8f9943885b7a4999ce5332ea2f4857036"
+    ],
+    "bin/charm-env": [
+      "layer:basic",
+      "static",
+      "458c53532c19ee357cbf4209ccc7d811810718ba0ea3b0588b3d3ef040a44b8e"
+    ],
+    "bin/layer_option": [
+      "layer:options",
+      "static",
+      "e959bf29da4c5edff28b2602c24113c4df9e25cdc9f2aa3b5d46c8577b2a40cc"
+    ],
+    "config.yaml": [
+      "hsscharm",
+      "dynamic",
+      "6004ebea9161166b9a0c87bdced4770aaea71ff98831e032ba0c7bd633cdfa82"
+    ],
+    "copyright": [
+      "layer:basic",
+      "static",
+      "f6740d66fd60b60f2533d9fcb53907078d1e20920a0219afce7182e2a1c97629"
+    ],
+    "copyright.layer-options": [
+      "layer:options",
+      "static",
+      "f6740d66fd60b60f2533d9fcb53907078d1e20920a0219afce7182e2a1c97629"
+    ],
+    "hooks/collect-metrics": [
+      "layer:vnfproxy",
+      "static",
+      "f2a6360cf21993f7dc07785ad702f141679a5a9b03c3db5d50dd06ffbe26bbb2"
+    ],
+    "hooks/config-changed": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/hook.template": [
+      "layer:basic",
+      "static",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/install": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/leader-elected": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/leader-settings-changed": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/post-series-upgrade": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/pre-series-upgrade": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/start": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/stop": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/update-status": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "hooks/upgrade-charm": [
+      "layer:basic",
+      "dynamic",
+      "2b693cb2a11594a80cc91235c2dc219a0a6303ae62bee8aa87eb35781f7158f7"
+    ],
+    "icon.svg": [
+      "hsscharm",
+      "static",
+      "d20624e9389af6506a8d8a69ac9bba4d41709601b624c0875fd7d6717b395088"
+    ],
+    "layer.yaml": [
+      "hsscharm",
+      "dynamic",
+      "e3a457817946d359d06d604436fee770dd1dc91f08b891aaf199fa5fd2799947"
+    ],
+    "lib/charms/layer/__init__.py": [
+      "layer:basic",
+      "static",
+      "dfe0d26c6bf409767de6e2546bc648f150e1b396243619bad3aa0553ab7e0e6f"
+    ],
+    "lib/charms/layer/basic.py": [
+      "layer:basic",
+      "static",
+      "8945da4f4516f9e4b6da1420df155c218f127eb23a8469b3faff9a07237e34b0"
+    ],
+    "lib/charms/layer/execd.py": [
+      "layer:basic",
+      "static",
+      "fda8bd491032db1db8ddaf4e99e7cc878c6fb5432efe1f91cadb5b34765d076d"
+    ],
+    "lib/charms/layer/options.py": [
+      "layer:options",
+      "static",
+      "8ae7a07d22542fc964f2d2bee8219d1c78a68dace70a1b38d36d4aea47b1c3b2"
+    ],
+    "lib/charms/sshproxy.py": [
+      "layer:sshproxy",
+      "static",
+      "fba0834f98f570b0b3d6b3e8a7f17b1d8909f50da9410ccda89b586f914b7ffd"
+    ],
+    "metadata.yaml": [
+      "hsscharm",
+      "dynamic",
+      "0c9d2a80bd843ce6da3f6a35dae209a3c2835ab941accbe4bd309f417dcf2f6c"
+    ],
+    "reactive/__init__.py": [
+      "layer:basic",
+      "static",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "reactive/hsscharm.py": [
+      "hsscharm",
+      "static",
+      "c7395256c772b5d50ba6791e2c2371a5fcd4ae57e199d8856acb38e15e68e26b"
+    ],
+    "reactive/sshproxy.py": [
+      "layer:sshproxy",
+      "static",
+      "acfaedf414946f8d218e5ebd04177f87258286915ba83b9c42ff7385975da6ab"
+    ],
+    "reactive/vnfproxy.py": [
+      "layer:vnfproxy",
+      "static",
+      "8e4101a72f02832e5c233b731981ff483675be608321b8eb9743d605b3f7d77a"
+    ],
+    "requirements.txt": [
+      "layer:basic",
+      "static",
+      "0f1c70d27e26005a96d66ad54482877ae20f7737693c833e29dd72bd6ac24892"
+    ],
+    "tests/00-setup": [
+      "hsscharm",
+      "static",
+      "111c079b81d260bbcd716dcf41672372a4cf4aaa14154b6c3055deeedae37a06"
+    ],
+    "tests/10-deploy": [
+      "hsscharm",
+      "static",
+      "aa922d96d34526dd2f98441567e9a462c4f10085c979822fbc3b9792e2b9ebcc"
+    ],
+    "wheelhouse/Jinja2-2.10.1.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "065c4f02ebe7f7cf559e49ee5a95fb800a9e4528727aec6f24402a5374c65013"
+    ],
+    "wheelhouse/MarkupSafe-1.1.1.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "29872e92839765e546828bb7754a68c418d927cd064fd4708fab9fe9c8bb116b"
+    ],
+    "wheelhouse/PyYAML-5.2.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "c0ee8eca2c582d29c3c2ec6e2c4f703d1b7f1fb10bc72317355a746057e7346c"
+    ],
+    "wheelhouse/Tempita-0.5.2.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "cacecf0baa674d356641f1d406b8bff1d756d739c46b869a54de515d08e6fc9c"
+    ],
+    "wheelhouse/charmhelpers-0.20.10.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "b383c51d7f0bbf7c93607110c299d579c1a8868e167b42ef2c3a94eb0c1e15fc"
+    ],
+    "wheelhouse/charms.reactive-1.3.0.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "82d2c614c82d64bf56e913990f22663e5de64b99db15838abfd9a064f1cc2f51"
+    ],
+    "wheelhouse/ecdsa-0.15.tar.gz": [
+      "layer:sshproxy",
+      "dynamic",
+      "8f12ac317f8a1318efa75757ef0a651abe12e51fc1af8838fb91079445227277"
+    ],
+    "wheelhouse/netaddr-0.7.19.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "38aeec7cdd035081d3a4c306394b19d677623bf76fa0913f6695127c7753aefd"
+    ],
+    "wheelhouse/paramiko-1.16.3.tar.gz": [
+      "layer:sshproxy",
+      "dynamic",
+      "97d932fdb4fec9aadf6bea368123f3ee15b92199f92eb62666370c7fed62d072"
+    ],
+    "wheelhouse/pip-18.1.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "c0a292bd977ef590379a3f05d7b7f65135487b67470f6281289a94e015650ea1"
+    ],
+    "wheelhouse/pyaml-20.3.1.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "9914879e6ac5cbf09b8cd5d3ba09e241ffcfd91c689cddc8d8b66a68c1c7e640"
+    ],
+    "wheelhouse/pycrypto-2.6.1.tar.gz": [
+      "layer:sshproxy",
+      "dynamic",
+      "f2ce1e989b272cfcb677616763e0a2e7ec659effa67a88aa92b3a65528f60a3c"
+    ],
+    "wheelhouse/setuptools-41.6.0.zip": [
+      "layer:basic",
+      "dynamic",
+      "6afa61b391dcd16cb8890ec9f66cc4015a8a31a6e1c2b4e0c464514be1a3d722"
+    ],
+    "wheelhouse/setuptools_scm-1.17.0.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "70a4cf5584e966ae92f54a764e6437af992ba42ac4bca7eb37cc5d02b98ec40a"
+    ],
+    "wheelhouse/six-1.14.0.tar.gz": [
+      "layer:sshproxy",
+      "dynamic",
+      "236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"
+    ],
+    "wheelhouse/wheel-0.33.6.tar.gz": [
+      "layer:basic",
+      "dynamic",
+      "10c9da68765315ed98850f8e048347c3eb06dd81822dc2ab1d4fde9dc9702646"
+    ]
+  }
+}

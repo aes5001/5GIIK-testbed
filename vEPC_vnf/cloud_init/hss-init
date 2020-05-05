@@ -1,0 +1,5 @@
+#cloud-config
+hostname: nextepc-hss
+password: {{ password }}
+chpasswd: { expire: False }
+ssh_pwauth: True

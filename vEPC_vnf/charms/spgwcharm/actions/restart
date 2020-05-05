@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+import sys
+sys.path.append('lib')
+from charms.reactive import main, set_flag
+from charmhelpers.core.hookenv import action_fail, action_name
+
+set_flag('actions.{}'.format(action_name()))
+
+try:
+    main()
+except Exception as e:
+    action_fail(repr(e))

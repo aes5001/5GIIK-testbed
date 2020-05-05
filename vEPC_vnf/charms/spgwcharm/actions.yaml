@@ -1,0 +1,68 @@
+##
+# Copyright 2016 Canonical Ltd.
+# All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+##
+
+"run":
+  "description": "Run an arbitrary command"
+  "params":
+    "command":
+      "description": "The command to execute."
+      "type": "string"
+      "default": ""
+  "required":
+  - "command"
+"generate-ssh-key":
+  "description": "Generate a new SSH keypair for this unit. This will replace any\
+    \ existing previously generated keypair."
+"verify-ssh-credentials":
+  "description": "Verify that this unit can authenticate with server specified by\
+    \ ssh-hostname and ssh-username."
+"get-ssh-public-key":
+  "description": "Get the public SSH key for this unit."
+"start":
+  "description": "Stop the service on the VNF."
+"stop":
+  "description": "Stop the service on the VNF."
+"restart":
+  "description": "Stop the service on the VNF."
+"reboot":
+  "description": "Reboot the VNF virtual machine."
+"upgrade":
+  "description": "Upgrade the software on the VNF."
+"configure-spgw":
+  "description": "Configures the SPGW"
+  "params":
+    "hss-ip":
+      "description": "HSS IP"
+      "type": "string"
+      "default": "0.0.0.0"
+    "spgw-ip":
+      "description": "SPGW IP"
+      "type": "string"
+      "default": "0.0.0.0"
+"add-route":
+  "description": "Adds a route to the SPGW"
+  "params":
+    "external-prefix":
+      "description": "Destinaton prefix IP"
+      "type": "string"
+      "default": "8.8.8.8/32"
+    "next-hop":
+      "description": "SGI next hop"
+      "type": "string"
+      "default": "192.168.2.1"
+"restart-spgw":
+  "description": "Restarts the service of the VNF"

@@ -1,0 +1,16 @@
+"includes":
+- "layer:options"
+- "layer:basic"
+- "layer:sshproxy"
+- "layer:vnfproxy"
+"exclude": [".travis.yml", "tests", "tox.ini", "test-requirements.txt"]
+"options":
+  "basic":
+    "use_venv": !!bool "false"
+    "packages": []
+    "python_packages": []
+    "include_system_packages": !!bool "false"
+  "sshproxy": {}
+  "vnfproxy": {}
+  "hsscharm": {}
+"is": "hsscharm"

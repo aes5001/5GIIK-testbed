@@ -1,0 +1,42 @@
+"options":
+  "ssh-hostname":
+    "type": "string"
+    "default": ""
+    "description": "The hostname or IP address of the machine to"
+  "ssh-username":
+    "type": "string"
+    "default": ""
+    "description": "The username to login as."
+  "ssh-password":
+    "type": "string"
+    "default": ""
+    "description": "The password used to authenticate."
+  "ssh-private-key":
+    "type": "string"
+    "default": ""
+    "description": "DEPRECATED. The private ssh key to be used to authenticate."
+  "ssh-public-key":
+    "type": "string"
+    "default": ""
+    "description": "The public key of this unit."
+  "ssh-key-type":
+    "type": "string"
+    "default": "rsa"
+    "description": "The type of encryption to use for the SSH key."
+  "ssh-key-bits":
+    "type": "int"
+    "default": !!int "4096"
+    "description": "The number of bits to use for the SSH key."
+  "string-option":
+    "type": "string"
+    "default": "Default Value"
+    "description": "A short description of the configuration option"
+  "boolean-option":
+    "type": "boolean"
+    "default": !!bool "false"
+    "description": "A short description of the configuration option"
+  "int-option":
+    "type": "int"
+    "default": !!int "9001"
+    "description": "A short description of the configuration option"
+

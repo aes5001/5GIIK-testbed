@@ -1,0 +1,16 @@
+"name": "hsscharm"
+"summary": "NextEPC HSS Charm"
+"maintainer": "Your name <youremail@yourdomain.com>"
+"description": |
+  This is an example of a proxy charm deployed by Open Source Mano.
+"tags":
+  # Replace "misc" with one or more whitelisted tags from this list:
+  # https://jujucharms.com/docs/stable/authors-charm-metadata
+- "misc"
+- "osm"
+- "vnf"
+- "nfv"
+"series":
+- "trusty"
+- "xenial"
+"subordinate": !!bool "false"
