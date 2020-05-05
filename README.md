@@ -154,7 +154,7 @@ openstack image create --file="./bionic-server-cloudimg-amd64.img" --container-f
 At this point, you can integrate your VIM account (OpenStack) to the service orchestrator (OSM). On your OSM machine execute the following.
 
 ```
-osm vim-create --name <a name for your VIM account> --user <admin or your tenant username> --password <the reuired password for your tenant account> --auth_url <url of your OpenStack dashboard>:5000/v3/ --tenant <admin or your related tanant name> --account_type openstack --config='{<possible additional configuration on your OpenStack platform>}'
+osm vim-create --name <a name for your VIM account> --user <admin or your tenant username> --password <the required password for your tenant account> --auth_url <url of your OpenStack dashboard>:5000/v3/ --tenant <admin or your related tanant name> --account_type openstack --config='{<possible additional configuration on your OpenStack platform>}'
 ```
 
 # Deploying Network Services
