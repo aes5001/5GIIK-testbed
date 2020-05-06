@@ -195,8 +195,129 @@ git clone https://github.com/OPENAIRINTERFACE/openair-cn-cups.git
 cd openair-cn-cups/                  
 git checkout develop
 ```
+#### OAI EPC - HSS 
+First go to the following directory and execute these commands one after another.
 
+```
+cd openair-cn/scripts
+./build_cassandra --check-installed-software --force
+sudo service cassandra stop
+sudo update-alternatives --config java
+sudo service cassandra start
+sudo service cassandra stop
+sudo rm -rf /var/lib/cassandra/data/system/*
+sudo rm -rf /var/lib/cassandra/commitlog/*
+sudo rm -rf /var/lib/cassandra/data/system_traces/*
+sudo rm -rf /var/lib/cassandra/saved_caches/*
+sudo service cassandra start
+./build_hss_rel14 --check-installed-software --force
+./build_hss_rel14 --clean
+Cassandra_Server_IP='127.0.0.1'
+MY_REALM='srslte.com'
+cqlsh --file ../src/hss_rel14/db/oai_db.cql $Cassandra_Server_IP
+./data_provisioning_users --apn default.srslte.com --apn2 internet --key 6FD60656E2B7F86FBEE9A31518AC18BE --imsi-first 901700000011201 --msisdn-first 001010000011201 --mme-identity mme.$MY_REALM --no-of-users 20 --realm $MY_REALM --truncate True  --verbose True --cassandra-cluster $Cassandra_Server_IP
 
+./data_provisioning_mme --id 3 --mme-identity mme.$MY_REALM --realm $MY_REALM --ue-reachability 1 --truncate True  --verbose True -C $Cassandra_Server_IP
+
+openssl rand -out $HOME/.rnd 128
+PREFIX='/usr/local/etc/oai'
+sudo mkdir -m 0777 -p $PREFIX
+sudo mkdir -m 0777 -p $PREFIX/freeDiameter
+sudo mkdir -m 0777 -p $PREFIX/logs
+sudo mkdir -m 0777 -p logs
+sudo chmod 777 $PREFIX
+sudo chmod 777 $PREFIX/freeDiameter
+sudo chmod 777 $PREFIX/logs
+sudo chmod 777 logs
+sudo cp ../etc/acl.conf ../etc/hss_rel14_fd.conf $PREFIX/freeDiameter
+sudo cp ../etc/hss_rel14.conf ../etc/hss_rel14.json $PREFIX
+sudo cp ../etc/oss.json $PREFIX
+declare -A HSS_CONF
+HSS_CONF[@PREFIX@]=$PREFIX
+HSS_CONF[@REALM@]=$MY_REALM
+HSS_CONF[@HSS_FQDN@]="hss.${HSS_CONF[@REALM@]}"
+HSS_CONF[@cassandra_Server_IP@]=$Cassandra_Server_IP
+HSS_CONF[@OP_KEY@]='AF8C8C9B229BFADC722A74A3FBF3A490'
+HSS_CONF[@ROAMING_ALLOWED@]='true'
+for K in "${!HSS_CONF[@]}"; do  egrep -lRZ "$K" $PREFIX | xargs -0 -l sed -i -e "s|$K|${HSS_CONF[$K]}|g"; done
+../src/hss_rel14/bin/make_certs.sh hss ${HSS_CONF[@REALM@]} $PREFIX
+sudo sed -i -e 's/#ListenOn/ListenOn/g' $PREFIX/freeDiameter/hss_rel14_fd.conf
+oai_hss -j $PREFIX/hss_rel14.json –onlyloadkey
+```
+
+#### OAI EPC - MME
+
+Remain in the same directory and follow up these commands to install MME. Notice to change MCC and MNC according to your SIMCard information or program the SIMCard with your favorite values.
+
+```
+./build_mme --check-installed-software --force
+./build_mme --clean
+virsh net-list --all
+openssl rand -out $HOME/.rnd 128
+INSTANCE=1
+PREFIX='/usr/local/etc/oai'
+cp ../etc/mme_fd.sprint.conf  $PREFIX/freeDiameter/mme_fd.conf
+cp ../etc/mme.conf  $PREFIX
+declare -A MME_CONF
+MME_CONF[@MME_S6A_IP_ADDR@]="127.0.0.11"
+MME_CONF[@INSTANCE@]=$INSTANCE
+MME_CONF[@PREFIX@]=$PREFIX
+MME_CONF[@REALM@]='srslte.com'
+MME_CONF[@PID_DIRECTORY@]='/var/run'
+MME_CONF[@MME_FQDN@]="mme.${MME_CONF[@REALM@]}"
+MME_CONF[@HSS_HOSTNAME@]='hss'
+MME_CONF[@HSS_FQDN@]="${MME_CONF[@HSS_HOSTNAME@]}.${MME_CONF[@REALM@]}"
+MME_CONF[@HSS_IP_ADDR@]='127.0.0.1'
+MME_CONF[@MCC@]='<your MCC of your SIMCard>'
+MME_CONF[@MNC@]='<your MNC of your SIMCard>'
+MME_CONF[@MME_GID@]='4'
+MME_CONF[@MME_CODE@]='1'
+MME_CONF[@TAC_0@]='600'
+MME_CONF[@TAC_1@]='601'
+MME_CONF[@TAC_2@]='602'
+MME_CONF[@MME_INTERFACE_NAME_FOR_S1_MME@]='ens3:m1c'
+MME_CONF[@MME_IPV4_ADDRESS_FOR_S1_MME@]='192.168.247.102/24'
+MME_CONF[@MME_INTERFACE_NAME_FOR_S11@]='ens3:m11'
+MME_CONF[@MME_IPV4_ADDRESS_FOR_S11@]='172.16.1.102/24'
+MME_CONF[@MME_INTERFACE_NAME_FOR_S10@]='ens3:m10'
+MME_CONF[@MME_IPV4_ADDRESS_FOR_S10@]='192.168.10.110/24'
+MME_CONF[@OUTPUT@]='CONSOLE'
+MME_CONF[@SGW_IPV4_ADDRESS_FOR_S11_TEST_0@]='172.16.1.104/24'
+MME_CONF[@SGW_IPV4_ADDRESS_FOR_S11_0@]='172.16.1.104/24'
+MME_CONF[@PEER_MME_IPV4_ADDRESS_FOR_S10_0@]='0.0.0.0/24'
+MME_CONF[@PEER_MME_IPV4_ADDRESS_FOR_S10_1@]='0.0.0.0/24'
+TAC_SGW_TEST='7'
+tmph=`echo "$TAC_SGW_TEST / 256" | bc`
+tmpl=`echo "$TAC_SGW_TEST % 256" | bc`
+MME_CONF[@TAC-LB_SGW_TEST_0@]=`printf "%02x\n" $tmpl`
+MME_CONF[@TAC-HB_SGW_TEST_0@]=`printf "%02x\n" $tmph`
+MME_CONF[@MCC_SGW_0@]=${MME_CONF[@MCC@]}
+MME_CONF[@MNC3_SGW_0@]=`printf "%03d\n" $(echo ${MME_CONF[@MNC@]} | sed 's/^0*//')`
+TAC_SGW_0='600'
+tmph=`echo "$TAC_SGW_0 / 256" | bc`
+tmpl=`echo "$TAC_SGW_0 % 256" | bc`
+MME_CONF[@TAC-LB_SGW_0@]=`printf "%02x\n" $tmpl`
+MME_CONF[@TAC-HB_SGW_0@]=`printf "%02x\n" $tmph`
+MME_CONF[@MCC_MME_0@]=${MME_CONF[@MCC@]}
+MME_CONF[@MNC3_MME_0@]=`printf "%03d\n" $(echo ${MME_CONF[@MNC@]} | sed 's/^0*//')`
+TAC_MME_0='601'
+tmph=`echo "$TAC_MME_0 / 256" | bc`
+tmpl=`echo "$TAC_MME_0 % 256" | bc`
+MME_CONF[@TAC-LB_MME_0@]=`printf "%02x\n" $tmpl`
+MME_CONF[@TAC-HB_MME_0@]=`printf "%02x\n" $tmph`
+MME_CONF[@MCC_MME_1@]=${MME_CONF[@MCC@]}
+MME_CONF[@MNC3_MME_1@]=`printf "%03d\n" $(echo ${MME_CONF[@MNC@]} | sed 's/^0*//')`
+TAC_MME_1='602'
+tmph=`echo "$TAC_MME_1 / 256" | bc`
+tmpl=`echo "$TAC_MME_1 % 256" | bc`
+MME_CONF[@TAC-LB_MME_1@]=`printf "%02x\n" $tmpl`
+MME_CONF[@TAC-HB_MME_1@]=`printf "%02x\n" $tmph`
+
+for K in "${!MME_CONF[@]}"; do    egrep -lRZ "$K" $PREFIX | xargs -0 -l sed -i -e "s|$K|${MME_CONF[$K]}|g";   ret=$?;[[ ret -ne 0 ]] && echo "Tried to replace $K with ${MME_CONF[$K]}"; done
+
+sudo ./check_mme_s6a_certificate $PREFIX/freeDiameter mme.${MME_CONF[@REALM@]}
+
+```
 
 
 
