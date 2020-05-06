@@ -165,7 +165,69 @@ At this stage, we have created our service orchestrator which is now integrated 
 
 As mentioned before, you should use cloud-based ubuntu images in order to install srsLTE for RAN and OAI EPC/NextEPC for CN. In the following the procedures for installing these base images are explained.
 
-### srsENB Features
+### OAI EPC installation on ubuntu 
+
+You should install low latency kernel on Ubuntu 18.04 as a base image for OAI EPC.
+
+```
+sudo apt-get install linux-image-lowlatency linux-headers-lowlatency
+```
+
+After that you should install Cassandra which acts as HSS database for OAI EPC.
+
+```
+echo "deb http://www.apache.org/dist/cassandra/debian 21x main" | $SUDO  tee -a /etc/apt/sources.list.d/cassandra.sources.list
+curl https://downloads.apache.org/cassandra/KEYS | $SUDO  apt-key add –
+$SUDO $INSTALLER install $OPTION curl openjdk-8-jre
+
+```
+
+Then you should reboot the instance in order to make the changes. Then, you should clone OAI from its main repository.
+
+```
+git clone https://github.com/OPENAIRINTERFACE/openair-cn.git
+cd openair-cn/scripts
+git checkout develop
+cd ..
+```
+```
+git clone https://github.com/OPENAIRINTERFACE/openair-cn-cups.git
+cd openair-cn-cups/                  
+git checkout develop
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
