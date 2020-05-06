@@ -319,7 +319,7 @@ sudo ./check_mme_s6a_certificate $PREFIX/freeDiameter mme.${MME_CONF[@REALM@]}
 
 ```
 
-#### OAI EPC - SPGWC
+#### OAI EPC - SPGWC and SPGWU
 
 Then you should change the directory in order to install control plane and data palne of SPGW.
 
@@ -377,6 +377,39 @@ sudo ifconfig ens3:s11 172.16.1.104 up
 ```
 
 These values should be considered while creating and configuring descriptors.
+
+### SRS LTE installation on ubuntu 
+
+You should install low latency kernel on Ubuntu 18.04 as a base image for srsLTE eNB.
+
+```
+sudo apt-get install linux-image-lowlatency linux-headers-lowlatency
+```
+
+For the case of srsLTE, we installed the required package from 5G-EmPOWER repository which is a cstomized version of srsLTE that is compatible with EmPOWER-Agent. EmPOWER-Agent acts as a mediator between the eNB and 5G-EmPOWER controller that is and SDN controller for RAN domain. First of all, you should install some dependencies on your instance.
+
+```
+sudo apt-get install cmake git libfftw3-dev libmbedtls-dev libboost-program-options-dev libconfig++-dev libsctp-dev libuhd-dev
+```
+
+Then, clone EmPOWER repository for srsLTE eNB and then excute the following commands one after another.
+
+```
+git clone https://github.com/5g-empower/srsLTE-20.04.git
+cd srsLTE-20.04
+mkdir build 
+cd build 
+cmake ../ 
+make
+make test
+sudo make install
+srslte_install_configs.sh user
+cd ~/srsLTE-20.04
+cp srsenb/drb.conf.example build/srsenb/src/drb.conf
+cp srsenb/enb.conf.example build/srsenb/src/enb.conf
+cp srsenb/rr.conf.example build/srsenb/src/rr.conf
+cp srsenb/sib.conf.example build/srsenb/src/sib.conf
+```
 
 
 
