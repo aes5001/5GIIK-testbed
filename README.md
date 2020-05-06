@@ -319,6 +319,65 @@ sudo ./check_mme_s6a_certificate $PREFIX/freeDiameter mme.${MME_CONF[@REALM@]}
 
 ```
 
+#### OAI EPC - SPGWC
+
+Then you should change the directory in order to install control plane and data palne of SPGW.
+
+```
+cd openair-cn-cupscd/build/scripts
+./build_spgwc -I -f
+./build_spgwc -c -V -b Debug -j
+INSTANCE=1
+PREFIX='/usr/local/etc/oai'
+sudo mkdir -m 0777 -p $PREFIX
+sudo chmod 777 $PREFIX
+cp ../../etc/spgw_c.conf  $PREFIX
+declare -A SPGWC_CONF
+SPGWC_CONF[@INSTANCE@]=$INSTANCE
+SPGWC_CONF[@PID_DIRECTORY@]='/var/run'
+SPGWC_CONF[@SGW_INTERFACE_NAME_FOR_S11@]='ens3:s11'
+SPGWC_CONF[@SGW_INTERFACE_NAME_FOR_S5_S8_CP@]='ens3:s5c'
+SPGWC_CONF[@PGW_INTERFACE_NAME_FOR_S5_S8_CP@]='ens3:p5c'
+SPGWC_CONF[@PGW_INTERFACE_NAME_FOR_SX@]='ens3:sxc'
+SPGWC_CONF[@DEFAULT_DNS_IPV4_ADDRESS@]='129.241.0.200'
+SPGWC_CONF[@DEFAULT_DNS_SEC_IPV4_ADDRESS@]='129.241.0.201'
+for K in "${!SPGWC_CONF[@]}"; do egrep -lZ "$K" $PREFIX/spgw_c.conf | xargs -0 -l sed -i -e "s|$K|${SPGWC_CONF[$K]}|g"; ret=$?;[[ ret -ne 0 ]] && echo "Tried to replace $K with ${SPGWC_CONF[$K]}"; done
+
+./build_spgwu -I -f
+./build_spgwu -c -V -b Debug -j
+INSTANCE=1
+PREFIX='/usr/local/etc/oai'
+sudo mkdir -m 0777 -p $PREFIX
+sudo chmod 777 $PREFIX
+cp ../../etc/spgw_u.conf  $PREFIX
+declare -A SPGWU_CONF
+SPGWU_CONF[@INSTANCE@]=$INSTANCE
+SPGWU_CONF[@PID_DIRECTORY@]='/var/run'
+SPGWU_CONF[@SGW_INTERFACE_NAME_FOR_S1U_S12_S4_UP@]='ens3:s1u'
+SPGWU_CONF[@SGW_INTERFACE_NAME_FOR_SX@]='ens3:sxu'
+SPGWU_CONF[@SGW_INTERFACE_NAME_FOR_SGI@]='ens3'
+for K in "${!SPGWU_CONF[@]}"; do  egrep -lZ "$K" $PREFIX/spgw_u.conf | xargs -0 -l sed -i -e "s|$K|${SPGWU_CONF[$K]}|g"; ret=$?;[[ ret -ne 0 ]] && echo "Tried to replace $K with ${SPGWU_CONF[$K]}"; done
+```
+
+Then you should configure all the required interfaces with the follwping commands according to your ethernet interface name and IP address.
+
+```
+sudo ifconfig <ethernet interface name in our case: ens3> <ethernet IP address in our case: 192.168.166.146> up
+
+sudo ifconfig ens3 192.168.166.146 up
+sudo ifconfig ens3:m1c 192.168.247.102 up
+sudo ifconfig ens3:s1u 192.168.248.159 up
+sudo ifconfig ens3:m11 172.16.1.102 up
+sudo ifconfig ens3:m10 192.168.10.110 up
+sudo ifconfig ens3:sxu 172.55.55.102 up
+sudo ifconfig ens3:sxc 172.55.55.101 up
+sudo ifconfig ens3:s5c 172.58.58.102 up
+sudo ifconfig ens3:p5c 172.58.58.101 up
+sudo ifconfig ens3:s11 172.16.1.104 up 
+```
+
+These values should be considered while creating and configuring descriptors.
+
 
 
 
