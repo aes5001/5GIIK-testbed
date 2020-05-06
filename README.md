@@ -163,17 +163,17 @@ At this stage, we have created our service orchestrator which is now integrated 
 
 ## Creating base images for service instantiation
 
-As mentioned before, you should use cloud-based ubuntu images in order to install srsLTE for RAN and OAI EPC/NextEPC for CN. In the following the procedures for installing these base images are explained.
+As mentioned before, you should use cloud-based ubuntu images in order to install srsLTE for RAN and OAI EPC/NextEPC for CN. In the following, the procedures for installing these base images are explained.
 
 ### OAI EPC installation on ubuntu 
 
-You should install low latency kernel on Ubuntu 18.04 as a base image for OAI EPC.
+You should install a low latency kernel on Ubuntu 18.04 as a base image for OAI EPC.
 
 ```
 sudo apt-get install linux-image-lowlatency linux-headers-lowlatency
 ```
 
-After that you should install Cassandra which acts as HSS database for OAI EPC.
+After that, you should install Cassandra which acts as the HSS database for OAI EPC.
 
 ```
 echo "deb http://www.apache.org/dist/cassandra/debian 21x main" | $SUDO  tee -a /etc/apt/sources.list.d/cassandra.sources.list
@@ -196,7 +196,7 @@ cd openair-cn-cups/
 git checkout develop
 ```
 #### OAI EPC - HSS 
-First go to the following directory and execute these commands one after another.
+First, go to the following directory and execute these commands one after another.
 
 ```
 cd openair-cn/scripts
@@ -247,7 +247,7 @@ oai_hss -j $PREFIX/hss_rel14.json –onlyloadkey
 
 #### OAI EPC - MME
 
-Remain in the same directory and follow up these commands to install MME. Notice to change MCC and MNC according to your SIMCard information or program the SIMCard with your favorite values.
+Remain in the same directory and follow up these commands to install MME. Notice to change MCC and MNC according to your SIM Card information or program the SIM Card with your favorite values.
 
 ```
 ./build_mme --check-installed-software --force
@@ -321,7 +321,7 @@ sudo ./check_mme_s6a_certificate $PREFIX/freeDiameter mme.${MME_CONF[@REALM@]}
 
 #### OAI EPC - SPGWC and SPGWU
 
-Then you should change the directory in order to install control plane and data palne of SPGW.
+Then you should change the directory in order to install the control plane and data plane of SPGW.
 
 ```
 cd openair-cn-cupscd/build/scripts
@@ -359,8 +359,7 @@ SPGWU_CONF[@SGW_INTERFACE_NAME_FOR_SGI@]='ens3'
 for K in "${!SPGWU_CONF[@]}"; do  egrep -lZ "$K" $PREFIX/spgw_u.conf | xargs -0 -l sed -i -e "s|$K|${SPGWU_CONF[$K]}|g"; ret=$?;[[ ret -ne 0 ]] && echo "Tried to replace $K with ${SPGWU_CONF[$K]}"; done
 ```
 
-Then you should configure all the required interfaces with the follwping commands according to your ethernet interface name and IP address.
-
+Then you should configure all the required interfaces with the following commands according to your ethernet interface name and IP address.
 ```
 sudo ifconfig <ethernet interface name in our case: ens3> <ethernet IP address in our case: 192.168.166.146> up
 
@@ -380,19 +379,19 @@ These values should be considered while creating and configuring descriptors.
 
 ### SRS LTE installation on ubuntu 
 
-You should install low latency kernel on Ubuntu 18.04 as a base image for srsLTE eNB.
+You should install a low latency kernel on Ubuntu 18.04 as a base image for srsLTE eNB.
 
 ```
 sudo apt-get install linux-image-lowlatency linux-headers-lowlatency
 ```
 
-For the case of srsLTE, we installed the required package from 5G-EmPOWER repository which is a cstomized version of srsLTE that is compatible with EmPOWER-Agent. EmPOWER-Agent acts as a mediator between the eNB and 5G-EmPOWER controller that is and SDN controller for RAN domain. First of all, you should install some dependencies on your instance.
+For the case of srsLTE, we installed the required package from 5G-EmPOWER repository which is a customized version of srsLTE that is compatible with EmPOWER-Agent. EmPOWER-Agent acts as a mediator between the eNB and 5G-EmPOWER controller that is an SDN controller for the RAN domain. First of all, you should install some dependencies in your instance.
 
 ```
 sudo apt-get install cmake git libfftw3-dev libmbedtls-dev libboost-program-options-dev libconfig++-dev libsctp-dev libuhd-dev
 ```
 
-Then, clone EmPOWER repository for srsLTE eNB and then excute the following commands one after another.
+Then, clone EmPOWER repository for srsLTE eNB and then execute the following commands one after another.
 
 ```
 sudo apt-get update
@@ -414,7 +413,7 @@ cp srsenb/sib.conf.example build/srsenb/src/sib.conf
 
 #### USRP installation
 
-At this point since the Base Band Unit (BBU) has been installed (srsLTE eNB), we need to connect it to a possible Remote Radio Unit (RRU). In our case we use a USRP b210. The following shows how to configure the host machine (Ubuntu 18.04) in order to connect to the USRP b210. Do not connect USRP to your host machine.
+At this point since the Base Band Unit (BBU) has been installed (srsLTE eNB), we need to connect it to a possible Remote Radio Unit (RRU). In our case, we use a USRP b210. The following shows how to configure the host machine (Ubuntu 18.04) in order to connect to the USRP b210. Do not connect USRP to your host machine.
 
 ```
 sudo apt-get update
@@ -427,7 +426,7 @@ git clone https://github.com/EttusResearch/uhd
 cd uhd
  ```
  
-According to UHD version of USRP b210, you should checkout the desired UHD version. Then install the specific version. Finally, update the library catche.
+According to the UHD version of USRP b210, you should check out the desired UHD version. Then install the specific version. Finally, update the library cache.
  
  ```
 git tag -l
@@ -448,7 +447,7 @@ You need to set the 'UHD_IMAGES_DIR' environment variable appropriately in .bash
  export UHD_IMAGES_DIR=/usr/local/share/uhd/images
  ```
  
-Finally you need to download the UHD FPGA Images.
+Finally, you need to download the UHD FPGA Images.
 
 ```
 sudo uhd_images_downloader
