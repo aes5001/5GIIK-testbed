@@ -161,7 +161,7 @@ osm vim-create --name <a name for your VIM account> --user <admin or your tenant
 
 At this stage, we have created our service orchestrator which is now integrated with one VIM account. For deploying network services, we need to create Virtual Network Function Descriptors (VNFDs) and Network Service Descriptors (NSDs). For creating network slices, some launched instances (services) on the VIM platform are needed to be chained to create one/several network slice(s). In this particular case, OAI EPC/NextEPC and srsLTE RAN are the two VNFs that emulate CN and RAN respectively. Clone the required descriptors from this repository and upload them to the OSM dashboard in order to instantiate network services.
 
-# Creating base images for service instantiation
+## Creating base images for service instantiation
 
 As mentioned before, you should use cloud-based ubuntu images in order to install srsLTE for RAN and OAI EPC/NextEPC for CN. In the following the procedures for installing these base images are explained.
 
@@ -395,6 +395,7 @@ sudo apt-get install cmake git libfftw3-dev libmbedtls-dev libboost-program-opti
 Then, clone EmPOWER repository for srsLTE eNB and then excute the following commands one after another.
 
 ```
+sudo apt-get update
 git clone https://github.com/5g-empower/srsLTE-20.04.git
 cd srsLTE-20.04
 mkdir build 
@@ -411,7 +412,64 @@ cp srsenb/rr.conf.example build/srsenb/src/rr.conf
 cp srsenb/sib.conf.example build/srsenb/src/sib.conf
 ```
 
+#### USRP installation
 
+At this point since the Base Band Unit (BBU) has been installed (srsLTE eNB), we need to connect it to a possible Remote Radio Unit (RRU). In our case we use a USRP b210. The following shows how to configure the host machine (Ubuntu 18.04) in order to connect to the USRP b210. Do not connect USRP to your host machine.
+
+```
+sudo apt-get update
+sudo apt-get -y install git swig cmake doxygen build-essential libboost-all-dev libtool libusb-1.0-0 libusb-1.0-0-dev libudev-dev libncurses5-dev libfftw3-bin libfftw3-dev libfftw3-doc libcppunit-1.14-0 libcppunit-dev libcppunit-doc ncurses-bin cpufrequtils python-numpy python-numpy-doc python-numpy-dbg python-scipy python-docutils qt4-bin-dbg qt4-default qt4-doc libqt4-dev libqt4-dev-bin python-qt4 python-qt4-dbg python-qt4-dev python-qt4-doc python-qt4-doc libqwt6abi1 libfftw3-bin libfftw3-dev libfftw3-doc ncurses-bin libncurses5 libncurses5-dev libncurses5-dbg libfontconfig1-dev libxrender-dev libpulse-dev swig g++ automake autoconf libtool python-dev libfftw3-dev libcppunit-dev libboost-all-dev libusb-dev libusb-1.0-0-dev fort77 libsdl1.2-dev python-wxgtk3.0 git libqt4-dev python-numpy ccache python-opengl libgsl-dev python-cheetah python-mako python-lxml doxygen qt4-default qt4-dev-tools libusb-1.0-0-dev libqwtplot3d-qt5-dev pyqt4-dev-tools python-qwt5-qt4 cmake git wget libxi-dev gtk2-engines-pixbuf r-base-dev python-tk liborc-0.4-0 liborc-0.4-dev libasound2-dev python-gtk2 libzmq3-dev libzmq5 python-requests python-sphinx libcomedi-dev python-zmq libqwt-dev libqwt6abi1 python-six libgps-dev libgps23 gpsd gpsd-clients python-gps python-setuptools
+
+cd $HOME
+mkdir workarea
+cd workarea
+git clone https://github.com/EttusResearch/uhd
+cd uhd
+ ```
+ 
+According to UHD version of USRP b210, you should checkout the desired UHD version. Then install the specific version. Finally, update the library catche.
+ 
+ ```
+git tag -l
+git checkout <UHD version>
+cd host
+mkdir build
+cd build
+cmake ../
+make
+make test
+sudo make install
+sudo ldconfig
+ ```
+ 
+You need to set the 'UHD_IMAGES_DIR' environment variable appropriately in .bashrc as the following.
+
+ ```
+ export UHD_IMAGES_DIR=/usr/local/share/uhd/images
+ ```
+ 
+Finally you need to download the UHD FPGA Images.
+
+```
+sudo uhd_images_downloader
+```
+ 
+At this point, connect USRP to the host machine and execute the following commands. You need to configure USB port of USRP as well (only for USRPs which has USB port instead of ethernet port).
+
+```
+sudo uhd_images_downloader
+cd $HOME/workarea/uhd/host/utils
+sudo cp uhd-usrp.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
+Now you can verify the connectivity by these commands.
+
+```
+uhd_find_devices
+uhd_usrp_probe
+```
 
 
 
