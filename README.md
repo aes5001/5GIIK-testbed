@@ -87,7 +87,7 @@ Create a configuration file, so-called answer file. You can modify this file and
 packstack --gen-answer-file=answer.txt
 ```
 
-Then open this answer file with your favorite text editor and customize the services you would prefer to run on your OpenStack. But it is necessary to map your ethernet interface on the external bridge (br-ex) in order to have network connectivity to outside of your OpenStack environment. So, apart from your changes in the answer file, do the following modifications.
+Apart from your changes in the answer file, do the following modifications in order to map your ethernet interface on the external bridge (br-ex) to have network connectivity to outside of your OpenStack environment
 
 ```
 --os-neutron-ovs-bridge-mappings=extnet:br-ex 
@@ -95,7 +95,7 @@ Then open this answer file with your favorite text editor and customize the serv
 --os-neutron-ml2-type-drivers=vxlan,flat
 ```
 
-Your server is ready to install OpenStack now. So, execute this command to deploy OpenStack on your server.
+Then, execute this command to deploy OpenStack on your server.
 
 ```
 packstack --answer-file=answer.txt
@@ -107,7 +107,7 @@ If you get an error regarding Puppet installation, first execute the following c
 yum downgrade leatherman
 ```
 
-After the installation is done, Then you should map the ethernet interface on external bridge on your server as you configured before in OpenStack installation. So create /etc/sysconfig/network-scripts/ifcfg-br-ex and paste the following content in it.
+Create /etc/sysconfig/network-scripts/ifcfg-br-ex and paste the following content in it.
 
 ```
 DEVICE=br-ex
@@ -131,7 +131,7 @@ OVS_BRIDGE=br-ex
 ONBOOT=yes
 ```
 
-Finally, reboot your server or execute the following command.
+Finally, execute the following command.
 
 ```
 service network restart
@@ -139,7 +139,7 @@ service network restart
 
 At this point, you should be able to access the OpenStack dashboard by using its credential information located in the keystonerc_admin file.
 
-You need to configure external and internal networks, possible routers, firewall, security groups on your OpenStack platform. You should also upload the required images you want to use for deploying network services on OpenStack. Usually, cloud-based Ubuntu images are the ones that are required for deploying network services such as RAN, CN instances of an LTE network. So, one simple approach is by using the OpenStack dashboard to create an image, and the other is by using CLI. To use CLI first of all source the keystonerc_admin file and then execute the following commands to download the required image and then import it on the OpenStack dashboard.
+Usually, cloud-based Ubuntu images are the ones that are required for deploying network services such as RAN, CN instances of an LTE network. So, one simple approach is by using the OpenStack dashboard to create an image, and the other is by using CLI. To use CLI first of all source the keystonerc_admin file and then execute the following commands to download the required image and then import it on the OpenStack dashboard.
 For Ubuntu 16.04 on your server execute the following.
 
 ```
