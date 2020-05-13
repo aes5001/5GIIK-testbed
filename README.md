@@ -5,7 +5,7 @@ This GitHub repository includes the main procedures to deploy 5GIIK testbed for 
 
 # Testbed Architecture
 
-5GIIK emulates 4G/5G network by utilizing 
+5GIIK emulates 4G/5G networks by utilizing 
 * OpenAirInterface (OAI) EPC or NetxtEPC as Core Network (CN)
 * Software Radio Systems (SRS) LTE as Radio Access Network (RAN)
 * Open-Source MANO (OSM) as a service orchestrator 
@@ -14,7 +14,7 @@ This GitHub repository includes the main procedures to deploy 5GIIK testbed for 
 
 # Service Orchestrator Deployment (Open-Source Mano (OSM))
 
-You need to have an Ubuntu18.04 (64-bit variant required) system with 2 CPUs, 8 GB RAM, at least 40GB disk, and a single interface with Internet access for deploying OSM release 7. It is recommended to install the OSM with debugging capabilities in order to trace back the possible errors that may occur.
+You need to have an Ubuntu18.04 (64-bit variant required) system with 2 CPUs, 8 GB RAM, at least 40GB disk, and a single interface with Internet access for deploying OSM release 7. It is recommended to install the OSM with debugging capabilities.
 
 ```
 wget https://osm-download.etsi.org/ftp/osm-7.0-seven/install_osm.sh
@@ -22,14 +22,14 @@ chmod +x install_osm.sh
 ./install_osm.sh 2>&1 | tee osm_install_log.txt
 ```
 
-You can then check if the installation has been done correctly with the following commands. These commands show the created docker containers that are built on your machine.
+You can then check if the installation has been done correctly with the following commands.
 
 ```
 docker stack ps osm |grep -i running
 docker service ls
 ```
 
-Then you can simply navigate to the OSM GUI by accessing the IP address of your host machine and using "admin/admin" as OSM credentials. It is recommended to change the password after the first time login. For accessing the OSM installed on a remote machine, if you did not install ssh server, execute the following command on your main host and then you will be able to access the host machine remotely.
+Simply navigate to the OSM GUI by accessing the IP address of your host machine and using "admin/admin" as OSM credentials. For accessing the OSM installed on a remote machine, execute the following command on your main host.
 
 ```
 sudo apt-get install openssh-server
@@ -38,46 +38,41 @@ service ssh status
 
 # Virtualized Infrastructure Manager (VIM) deployment (OpenStack)
 
-Usually deploying OpenStack is not straight forward as it seems in the first step. You need to deal with multiple problems. It is strongly recommended to use a server with high capacity in terms of RAM and CPUs in order to avoid possible further problems. One of the possible procedures to deploy OpenStack is to install all-in-one implementations. In the following, the procedures are explained. First prepare a server with the minimum requirements such as at least 64GB of RAM, 100GB of storage, and 7 CPUs. You need to install the Minimal version of CentOS7 Linux distribution in order to be able to run OpenStack on top of it.
-
-After installation you execute following commands on your CentOS7 server in order to update your system:
+In the following, the procedures of deploying all-in-one openstack implementation are explained. First prepare a server with the minimum requirements such as at least 64GB of RAM, 100GB of storage, and 7 CPUs. You need to install the Minimal version of CentOS7 Linux distribution in order to be able to run OpenStack on top of it. After installation, update your CentOS7 server.
 
 ```
 yum install epel-release
 yum update
 ```
 
-The same as the OSM, for accessing the CentOS7 server remotely, simply execute the following commands on your server:
+For accessing remotely to your VIM.
 
 ```
 sudo yum –y install openssh-server openssh-clients
 sudo systemctl status sshd
 ```
 
-Now your CentOS7 server is ready for OpenStack installation. RDO project is one possible solution for deploying all-in-one OpenStack. However, you should modify some procedures for avoiding possible errors that may occur during installation.
-
-First of all, execute the following commands to turn off NetworkManager and Firewall on your server and enable normal Networking:
+Begin the installation process by executing the following commands to turn off NetworkManager and Firewall on your server and enable normal Networking.
 
 ```
 sudo systemctl disable firewalld NetworkManager
 sudo systemctl enable network
 ```
 
-For development purposes, it is recommended to disable SELINUX on your server.
+Disable SELINUX on your CentOS7 server.
 
 ```
 sed -i s/^SELINUX=.*$/SELINUX=permissive/ /etc/selinux/config
 ```
 
-Then if your environment is a non-English locale, change it by adding the following in your /etc/environment.
+Then if your environment is a non-English locale, change it by adding the following in your /etc/environment. Then reboot your server.
 
 ```
 LANG=en_US.utf-8
 LC_ALL=en_US.utf-8
 ```
 
-At this point, it is better to reboot your server.
-After your server is relaunched, you are able to start the OpenStack installation. The current and stable version of the RDO solution for OpenStack installation is stein. So, execute the following commands in order to install the required repositories on your server.
+At this point execute the following commands in order to install the required repositories on your server for openstack-stein version.
 
 ```
 sudo yum update -y
@@ -86,7 +81,7 @@ sudo yum update -y
 sudo yum install -y openstack-packstack
 ```
 
-In this stage, you need to create a configuration file called the answer file which includes all the services that can be provided by the OpenStack. Creating an answer file helps you to customize the services that you prefer to have on your OpenStack platform. You can modify this file and then execute it to install OpenStack all-in-one solution. So, first, execute the following command to create the answer file.
+Create a configuration file, so-called answer file. You can modify this file and then execute it to install OpenStack all-in-one solution. So, first, execute.
 
 ```
 packstack --gen-answer-file=answer.txt
