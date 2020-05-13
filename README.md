@@ -1,8 +1,16 @@
 # 5GIIK-testbed
 
 This GitHub repository includes the main procedures to deploy 5GIIK testbed for Network Slicing and Orchestration.
-5GIIK is an academic platform has been created in the information security department of NTNU university in Norway. The main target is to deploy a small-scale platform that helps academic purposes for realizing network slicing and service orchestration. 5GIIK emulates the Radio Access Network (RAN) by using Software Radio Systems (SRS) LTE and the Core Network (CN) by utilizing OpenAirInterface (OAI) EPC or NetxtEPC. 5GIIK benefits from a service orchestrator (Open-Source MANO (OSM)), Virtualized Infrastructure Managers (VIMs) in our case OpenStack platforms, and SDN controllers for various network domains (5G-EmPOWER and ONOS). All required procedures for deploying the 5GIIK platform are explained in the following.
+5GIIK is an academic platform has been created in the information security department of NTNU university in Norway. 
 
+# Testbed Architecture
+
+5GIIK emulates 4G/5G network by utilizing 
+* OpenAirInterface (OAI) EPC or NetxtEPC as Core Network (CN)
+* Software Radio Systems (SRS) LTE as Radio Access Network (RAN)
+* Open-Source MANO (OSM) as a service orchestrator 
+* OpenStack as Virtualized Infrastructure Manager (VIM)
+* 5G-EmPOWER and ONOS SDN controllers for various network domains.
 
 # Service Orchestrator Deployment (Open-Source Mano (OSM))
 
