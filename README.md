@@ -139,22 +139,22 @@ service network restart
 
 At this point, you should be able to access the OpenStack dashboard by using its credential information located in the keystonerc_admin file.
 
-Usually, cloud-based Ubuntu images are the ones that are required for deploying network services such as RAN, CN instances of an LTE network. So, one simple approach is by using the OpenStack dashboard to create an image, and the other is by using CLI. To use CLI first of all source the keystonerc_admin file and then execute the following commands to download the required image and then import it on the OpenStack dashboard.
-For Ubuntu 16.04 on your server execute the following.
+To use CLI first of all source the keystonerc_admin file and then execute the following commands to download the required images and then import them on the OpenStack dashboard.
+For Ubuntu 16.04.
 
 ```
 wget https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
 openstack image create --file="./xenial-server-cloudimg-amd64-disk1.img" --container-format=bare --disk-format=qcow2 ubuntu1604
 ```
 
-For Ubuntu 18.04 on your server execute the following.
+For Ubuntu 18.04.
 
 ```
 wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
 openstack image create --file="./bionic-server-cloudimg-amd64.img" --container-format=bare --disk-format=qcow2 ubuntu1804
 ```
 
-At this point, you can integrate your VIM account (OpenStack) to the service orchestrator (OSM). On your OSM machine execute the following.
+Integrate your VIM account (OpenStack) to the service orchestrator (OSM). On your OSM machine execute the following.
 
 ```
 osm vim-create --name <a name for your VIM account> --user <admin or your tenant username> --password <the required password for your tenant account> --auth_url <url of your OpenStack dashboard>:5000/v3/ --tenant <admin or your related tanant name> --account_type openstack --config='{<possible additional configuration on your OpenStack platform>}'
@@ -162,11 +162,11 @@ osm vim-create --name <a name for your VIM account> --user <admin or your tenant
 
 # Deploying Network Services
 
-At this stage, we have created our service orchestrator which is now integrated with one VIM account. For deploying network services, we need to create Virtual Network Function Descriptors (VNFDs) and Network Service Descriptors (NSDs). For creating network slices, some launched instances (services) on the VIM platform are needed to be chained to create one/several network slice(s). In this particular case, OAI EPC/NextEPC and srsLTE RAN are the two VNFs that emulate CN and RAN respectively. Clone the required descriptors from this repository and upload them to the OSM dashboard in order to instantiate network services.
+We have created our service orchestrator which is now integrated with one VIM account. For deploying network services, we need to create Virtual Network Function Descriptors (VNFDs) and Network Service Descriptors (NSDs). For creating network slices, some launched instances (services) on the VIM platform are needed to be chained to create one/several network slice(s). In this particular case, OAI EPC/NextEPC and srsLTE RAN are the two VNFs that emulate CN and RAN respectively. Clone the required descriptors from this repository and upload them to the OSM dashboard in order to instantiate network services.
 
 ## Creating base images for service instantiation
 
-As mentioned before, you should use cloud-based ubuntu images in order to install srsLTE for RAN and OAI EPC/NextEPC for CN. In the following, the procedures for installing these base images are explained.
+You should use cloud-based ubuntu images in order to install srsLTE for RAN and OAI EPC/NextEPC for CN.
 
 ### OAI EPC installation on ubuntu 
 
@@ -185,7 +185,7 @@ $SUDO $INSTALLER install $OPTION curl openjdk-8-jre
 
 ```
 
-Then you should reboot the instance in order to make the changes. Then, you should clone OAI from its main repository.
+Reboot the instance in order to make the changes. Then, you should clone OAI from its main repository.
 
 ```
 git clone https://github.com/OPENAIRINTERFACE/openair-cn.git
