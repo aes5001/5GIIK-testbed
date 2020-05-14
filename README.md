@@ -1,22 +1,22 @@
+# 5GIIK-testbed
+
+This GitHub repository gives step-by-step instructions for deployment of 5GIIK testbed for Network Slicing and Orchestration. 5GIIK is an academic platform that has been developed at the Department of Information Security and Communication Technology (IIK) - NTNU, Norway.
+
+# Testbed Architecture
+
+5GIIK emulates 4G/5G networks by utilizing:
+
+* OpenAirInterface (OAI) EPC or NextEPC as Core Network (CN);
+* Software Radio Systems (SRS) LTE as Radio Access Network (RAN);
+* Open-Source MANO (OSM) as a service orchestrator;
+* OpenStack as Virtualized Infrastructure Manager (VIM);
+* 5G-EmPOWER and ONOS SDN controllers.
+
 # Publishing
 
 If you publish an academic paper using the results of the 5GIIK-testbed, please cite:
 
 Ali Esmaeily, Katina Kralevska, and Danilo Gligoroski. "A Cloud-based SDN/NFV Testbed for End-to-End Network Slicing in 4G/5G." arXiv preprint arXiv:2004.10455 (2020). https://arxiv.org/abs/2004.10455
-
-# 5GIIK-testbed
-
-This GitHub repository includes the main procedures to deploy 5GIIK testbed for Network Slicing and Orchestration.
-5GIIK is an academic platform has been created in the information security department of NTNU university in Norway. 
-
-# Testbed Architecture
-
-5GIIK emulates 4G/5G networks by utilizing 
-* OpenAirInterface (OAI) EPC or NetxtEPC as Core Network (CN)
-* Software Radio Systems (SRS) LTE as Radio Access Network (RAN)
-* Open-Source MANO (OSM) as a service orchestrator 
-* OpenStack as Virtualized Infrastructure Manager (VIM)
-* 5G-EmPOWER and ONOS SDN controllers for various network domains.
 
 # Service Orchestrator Deployment (Open-Source Mano (OSM))
 
@@ -204,6 +204,7 @@ git clone https://github.com/OPENAIRINTERFACE/openair-cn-cups.git
 cd openair-cn-cups/                  
 git checkout develop
 ```
+
 #### OAI EPC - HSS 
 First, go to the following directory and execute these commands one after another.
 
@@ -256,7 +257,7 @@ oai_hss -j $PREFIX/hss_rel14.json –onlyloadkey
 
 #### OAI EPC - MME
 
-Remain in the same directory and follow up these commands to install MME. Notice to change MCC and MNC according to your SIM Card information or program the SIM Card with your favorite values.
+Remain in the same directory and follow up these commands to install MME. Change MCC and MNC according to your SIM Card information or program the SIM Card with your favorite values.
 
 ```
 ./build_mme --check-installed-software --force
@@ -325,7 +326,6 @@ MME_CONF[@TAC-HB_MME_1@]=`printf "%02x\n" $tmph`
 for K in "${!MME_CONF[@]}"; do    egrep -lRZ "$K" $PREFIX | xargs -0 -l sed -i -e "s|$K|${MME_CONF[$K]}|g";   ret=$?;[[ ret -ne 0 ]] && echo "Tried to replace $K with ${MME_CONF[$K]}"; done
 
 sudo ./check_mme_s6a_certificate $PREFIX/freeDiameter mme.${MME_CONF[@REALM@]}
-
 ```
 
 #### OAI EPC - SPGWC and SPGWU
@@ -368,7 +368,8 @@ SPGWU_CONF[@SGW_INTERFACE_NAME_FOR_SGI@]='ens3'
 for K in "${!SPGWU_CONF[@]}"; do  egrep -lZ "$K" $PREFIX/spgw_u.conf | xargs -0 -l sed -i -e "s|$K|${SPGWU_CONF[$K]}|g"; ret=$?;[[ ret -ne 0 ]] && echo "Tried to replace $K with ${SPGWU_CONF[$K]}"; done
 ```
 
-Then you should configure all the required interfaces with the following commands according to your ethernet interface name and IP address.
+Configure all the required interfaces with the following commands according to your Ethernet interface name and IP address.
+
 ```
 sudo ifconfig <ethernet interface name in our case: ens3> <ethernet IP address in our case: 192.168.166.146> up
 
