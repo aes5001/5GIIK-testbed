@@ -2,7 +2,7 @@
 
 If you publish an academic paper using the results of the 5GIIK-testbed, please cite:
 
-Ali Esmaeily, Katina Kralevska, and Danilo Gligoroski. "A Cloud-based SDN/NFV Testbed for End-to-End Network Slicing in 4G/5G." arXiv preprint arXiv:2004.10455 (2020).
+Ali Esmaeily, Katina Kralevska, and Danilo Gligoroski. "A Cloud-based SDN/NFV Testbed for End-to-End Network Slicing in 4G/5G." arXiv preprint arXiv:2004.10455 (2020). https://arxiv.org/abs/2004.10455
 
 # 5GIIK-testbed
 
