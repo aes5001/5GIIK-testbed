@@ -16,7 +16,7 @@ This GitHub repository gives step-by-step instructions for deployment of 5GIIK t
 
 If you publish an academic paper using the results of the 5GIIK-testbed, please cite:
 
-Ali Esmaeily, Katina Kralevska, and Danilo Gligoroski. "A Cloud-based SDN/NFV Testbed for End-to-End Network Slicing in 4G/5G." arXiv preprint arXiv:2004.10455 (2020). https://arxiv.org/abs/2004.10455
+A. Esmaeily, K. Kralevska and D. Gligoroski, "A Cloud-based SDN/NFV Testbed for End-to-End Network Slicing in 4G/5G," 2020 6th IEEE Conference on Network Softwarization (NetSoft), Ghent, Belgium, 2020, pp. 29-35, doi: 10.1109/NetSoft48620.2020.9165419. https://ieeexplore.ieee.org/document/9165419
 
 # Service Orchestrator Deployment (Open-Source Mano (OSM))
 
